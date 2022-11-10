@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { LineChartComponent } from "./widgets/Recharts/Chart";
-import { PlotlyLineChartComponent } from './widgets/Plotly/Plot';
+import { LineChartComponent } from "./widgets/Recharts/LinePlot";
+import { PlotlyLineChartComponent } from './widgets/Plotly/LinePlot';
 import {inputData, moreData} from "./data"
 
 function App() {
@@ -12,12 +12,17 @@ function App() {
       width= {600}
       height = {300}
       dataKey= "x"
-      oyLabel= "KWh"
-      oxLabel= "hours"
+      yLabel= "KWh"
+      xLabel= "hours"
       yLimit= {[0, 20000]}
       />
       <PlotlyLineChartComponent
-      name= "a thing"
+      data= {[inputData, moreData]}
+      width= {1600}
+      height = {750}
+      yLabel= "KWh"
+      xLabel= "hours"
+      yLimit= {[0, 10000]}
       />
     </div>
   );
