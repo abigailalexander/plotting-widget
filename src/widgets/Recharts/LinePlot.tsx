@@ -17,8 +17,8 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
     width,
     height,
     data,
-    oxLabel,
-    oyLabel,
+    xLabel,
+    yLabel,
     dataKey,
     yLimit
   } = props;
@@ -72,11 +72,11 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
                   margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid />
                   <XAxis dataKey={dataKey} dy={10} dx={20}>
-                    <Label value={oxLabel}/>
+                    <Label value={xLabel}/>
                   </XAxis>
                   <YAxis>type="number" domain={yLimit}
                     <Label
-                      value={oyLabel}
+                      value={yLabel}
                       position="left"
                       angle={-90}
                       dy={-20}
