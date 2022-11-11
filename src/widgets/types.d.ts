@@ -1,6 +1,6 @@
 type DataPoint = {
-    x: number;
-    y: number
+    x: number | string;
+    y: number;
 };
 
 type LineLabel = {
@@ -22,7 +22,7 @@ type LineComponentProps = {
     xLabel: string; //name for x axis
     yLabel: string; // name for y axis
     dataKey: string; //which variable to use as key
-    yLimit: number[]; //limits of axis
+    yLimit?: number[]; //limits of axis
 };
 
 type PlotlyLineComponentProps = {
@@ -31,5 +31,5 @@ type PlotlyLineComponentProps = {
     data: DataSet[]; 
     xLabel: string; //name for x axis
     yLabel: string; // name for y axis
-    yLimit: number[]; //limits of axis
+    yLimit?: number[]; //limits of axis
 }
