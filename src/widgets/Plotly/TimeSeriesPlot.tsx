@@ -8,6 +8,8 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
       width,
       height,
       data,
+      xName,
+      yName,
       xLabel,
       yLabel,
     } = props;
@@ -16,7 +18,7 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
     // plotly is able to parse datetimes from strings
     return (
         <Plot
-          data={createLines(data)}
+          data={createLines(data, xName, yName)}
           layout={
             {width: width, 
             height: height, 
@@ -32,13 +34,13 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
       );
   }
 
-function createLines(dataSets: DataSet[]): any[] {
+function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
     let traces: any[] = [];
     dataSets.map(dataSet => (
         traces.push({
             name: dataSet.label.key,
-            x: dataSet.values.map(point => point.x), 
-            y: dataSet.values.map(point => point.y),
+            x: dataSet.values.map(point => point[xName as keyof typeof point]), 
+            y: dataSet.values.map(point => point[yName as keyof typeof point]),
             type: 'scatter',
             mode: 'lines+markers',
             marker: {

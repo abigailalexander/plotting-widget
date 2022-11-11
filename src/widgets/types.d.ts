@@ -3,6 +3,11 @@ type DataPoint = {
     y: number;
 };
 
+type RatDataPoint = {
+    date: string;
+    rats: number;
+}
+
 type LineLabel = {
     key: string;
     color: string;
@@ -11,7 +16,7 @@ type LineLabel = {
 // Dataset type
 export type DataSet = {
     label: LineLabel;
-    values: DataPoint[];
+    values: DataPoint[] | RatDataPoint[];
 };
 
 // Component can accept multiple datasets
@@ -19,6 +24,8 @@ type LineComponentProps = {
     width: number;
     height: number;
     data: DataSet[]; 
+    xName: string; //name of property that is x data
+    yName: string; //name of property that is y data
     xLabel: string; //name for x axis
     yLabel: string; // name for y axis
     dataKey: string; //which variable to use as key
@@ -29,6 +36,8 @@ type PlotlyLineComponentProps = {
     width: number;
     height: number;
     data: DataSet[]; 
+    xName: string;
+    yName: string;
     xLabel: string; //name for x axis
     yLabel: string; // name for y axis
     yLimit?: number[]; //limits of axis

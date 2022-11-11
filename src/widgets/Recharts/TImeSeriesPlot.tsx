@@ -17,6 +17,8 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
     width,
     height,
     data,
+    xName,
+    yName,
     xLabel,
     yLabel,
     dataKey,
@@ -24,7 +26,7 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
   // want to extract all labels
   let labels = data.map(a => a.label)
   // want to change all "y" to "label"
-  let allData = combineData(data)
+  let allData = combineData(data, xName, yName)
   console.log(allData)
   // want to compile all data into single array? with label name as y
   // so ta
@@ -114,7 +116,7 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
  * data objects, might not be necessary?
  * @param dataSets array of datasets 
  */
-function combineData(dataSets: DataSet[]): any[] {
+function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
   let combinedDataSet: any[] = [];
   dataSets.forEach((dataSet) => {
     // so for each dataset, want to check if x exists in
@@ -122,9 +124,9 @@ function combineData(dataSets: DataSet[]): any[] {
     // if not, then create new object in array that has x
     // and label y
     dataSet.values.forEach((data) => {
-      let updatedData = {x: data.x, [dataSet.label.key]: data.y}
+      let updatedData = {x: data[xName as keyof typeof data], [dataSet.label.key]: data[yName as keyof typeof data]}
       // find index of x if it exists already in combined dataset
-      let i = combinedDataSet.findIndex(e => e.x === data.x)
+      let i = combinedDataSet.findIndex(e => e.x === data[xName as keyof typeof data])
       if (i > -1){
         // it exists, now we need to append to it
         let newData = {...combinedDataSet[i], ...updatedData}

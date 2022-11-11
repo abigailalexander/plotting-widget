@@ -8,6 +8,8 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
       width,
       height,
       data,
+      xName,
+      yName,
       xLabel,
       yLabel,
       yLimit
@@ -16,7 +18,7 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
     // here we return the actual chart
     return (
         <Plot
-          data={createLines(data)}
+          data={createLines(data, xName, yName)}
           layout={
             {width: width, 
             height: height, 
@@ -33,13 +35,13 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
       );
   }
 
-function createLines(dataSets: DataSet[]): any[] {
+function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
     let traces: any[] = [];
     dataSets.map(dataSet => (
         traces.push({
             name: dataSet.label.key,
-            x: dataSet.values.map(point => point.x), 
-            y: dataSet.values.map(point => point.y),
+            x: dataSet.values.map(point => point[xName as keyof typeof point]), 
+            y: dataSet.values.map(point => point[yName as keyof typeof point]),
             type: 'scatter',
             mode: 'lines+markers',
             marker: {

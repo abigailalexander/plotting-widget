@@ -15,6 +15,8 @@ function App() {
       width= {600}
       height = {300}
       dataKey= "x"
+      xName="x"
+      yName="y"
       yLabel= "KWh"
       xLabel= "hours"
       yLimit= {[0, 10000]}
@@ -23,6 +25,8 @@ function App() {
       data= {[firstData, secondData]}
       width= {1600}
       height = {750}
+      xName="x"
+      yName="y"
       yLabel= "KWh"
       xLabel= "hours"
       yLimit= {[0, 15000]}
@@ -32,6 +36,8 @@ function App() {
       width= {600}
       height = {300}
       dataKey= "x"
+      xName="date"
+      yName="rats"
       yLabel= "Number of rats"
       xLabel= "Date"
       />
@@ -40,6 +46,8 @@ function App() {
       width= {600}
       height = {300}
       dataKey= "x"
+      xName="date"
+      yName="rats"
       yLabel= "Number of rats"
       xLabel= "Time"
       />
@@ -47,6 +55,8 @@ function App() {
       data= {[dateOne, dateTwo]}
       width= {1600}
       height = {750}
+      xName="date"
+      yName="rats"
       yLabel= "Number of rats"
       xLabel= "Date"
       />
@@ -54,6 +64,8 @@ function App() {
       data= {[dateThree, dateFour, dateFive]}
       width= {1600}
       height = {750}
+      xName="date"
+      yName="rats"
       yLabel= "Number of rats"
       xLabel= "Time"
       />

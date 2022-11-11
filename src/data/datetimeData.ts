@@ -1,4 +1,4 @@
-import { DataSet, DataPoint } from "../widgets/types"
+import { DataSet, RatDataPoint } from "../widgets/types"
 
 // Sample data - day interva;s
 export const dateOne: DataSet = {
@@ -48,10 +48,10 @@ function generateDateData(interval: number): any[] {
     console.log(date_ms)
     const dataArray = []
     for(let i: number = 0; i < 50; i++){
-        let dataObj: DataPoint = {x: 0, y: 0}
+        let dataObj: RatDataPoint = {date: "N/A", rats: 0}
         let _date = new Date(date_ms).toDateString()
-        dataObj.x = _date
-        dataObj.y = Math.random() * 1000
+        dataObj.date = _date
+        dataObj.rats = Math.random() * 1000
         dataArray.push(dataObj)
         date_ms += interval
     };
@@ -69,10 +69,10 @@ function generateDateData(interval: number): any[] {
     console.log(date_ms)
     const dataArray = []
     for(let i: number = 0; i < 50; i++){
-        let dataObj: DataPoint = {x: 0, y: 0}
+        let dataObj: RatDataPoint = {date: "N/A", rats: 0}
         let _date = new Date(date_ms).toLocaleTimeString()
-        dataObj.x = _date
-        dataObj.y = Math.random() * 1000
+        dataObj.date = _date
+        dataObj.rats = Math.random() * 1000
         dataArray.push(dataObj)
         date_ms += interval
     };
