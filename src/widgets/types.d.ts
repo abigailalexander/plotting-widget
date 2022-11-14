@@ -6,6 +6,7 @@ type DataPoint = {
 type RatDataPoint = {
     date: string;
     rats: number;
+    plagueVictims: number;
 }
 
 type LineLabel = {

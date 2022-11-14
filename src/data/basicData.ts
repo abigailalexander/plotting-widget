@@ -40,7 +40,7 @@ export const fifthData: DataSet = {
 function generateData(interval: number): any[] {
     let k: number = Math.random() * 10000
     const dataArray = []
-    for(let i: number = 0; i < 200; i++){
+    for(let i: number = 0; i < 50; i++){
         let dataObj = {x: 0, y: 0}
         dataObj.x = i
         dataObj.y = k
@@ -53,7 +53,7 @@ function generateData(interval: number): any[] {
 function generateRandomData(): any[] {
     const dataArray = []
     // want to iterate over and 
-    for(let i: number = 0; i < 500; i++){
+    for(let i: number = 0; i < 50; i++){
         let dataObj = {x: 0, y: 0}
         dataObj.x = i
         dataObj.y = Math.random() * 10000

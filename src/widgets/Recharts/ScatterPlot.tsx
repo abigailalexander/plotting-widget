@@ -1,18 +1,18 @@
 import React, {useState} from "react";
 import {
-    LineChart,
-    Line,
+    ScatterChart,
+    Scatter,
+    Label,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
     Legend,
-    Label,
     ResponsiveContainer,
 } from "recharts";
 import { LineComponentProps, DataSet } from "../types";
   
-export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element => {
+export const ScatterChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
     width,
     height,
@@ -23,13 +23,15 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
     yLabel,
     dataKey,
   } = props;
-  // want to extract all labels
-  let labels = data.map(a => a.label)
-  // want to change all "y" to "label"
+  // want single label for combined dataset
+  let labels = [{
+    key: "plagueVictims",
+    color: "green"
+  }]
+  // create our combined data
   let allData = combineData(data, xName, yName)
-  console.log(allData)
   // this sets up state for showing/hiding traces
-  const [lineProps, setLineProps] = useState(
+  const [scatterProps, setScatterProps] = useState(
       labels.reduce(
         (a: any, { key }: any) => {
           a[key] = false;
@@ -41,19 +43,19 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
 
   // 
   const handleLegendMouseEnter = (e: any) => {
-    if (!lineProps[e.dataKey]) {
-      setLineProps({ ...lineProps, hover: e.dataKey });
+    if (!scatterProps[e.dataKey]) {
+      setScatterProps({ ...scatterProps, hover: e.dataKey });
     }
   };
 
   const handleLegendMouseLeave = (e: any) => {
-    setLineProps({ ...lineProps, hover: null });
+    setScatterProps({ ...scatterProps, hover: null });
   };
 
   const selectLine = (e: any) => {
-    setLineProps({
-      ...lineProps,
-      [e.dataKey]: !lineProps[e.dataKey],
+    setScatterProps({
+      ...scatterProps,
+      [e.dataKey]: !scatterProps[e.dataKey],
       hover: null
     });
   };
@@ -62,45 +64,43 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
   return (
       <>
       <h1 className="text-heading">
-          Time Series Chart Using Rechart
+          Scatter Chart Using Rechart (combining 2 datasets)
       </h1>
       <ResponsiveContainer width="100%" aspect={3}>
-              <LineChart data={allData} //set up data that goes into plot
+              <ScatterChart data={allData} //set up data that goes into plot
                   width={width} //was 600
                   height={height} // was 300
                   margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid />
-                  <XAxis dataKey={dataKey} dy={10} dx={20}>
+                  <XAxis dataKey={dataKey} interval={'preserveStartEnd'}>
                     <Label value={xLabel}/>
                   </XAxis>
                   <YAxis>type="number"
                     <Label
                       value={yLabel}
-                      position="left"
                       angle={-90}
-                      dy={-20}
-                      dx={-10}
                     />
                   </YAxis>
                   <Legend 
+                    // handles show/hide traces
                     onClick={selectLine}
                     onMouseOver={handleLegendMouseEnter}
                     onMouseOut={handleLegendMouseLeave}
                   />
                   <Tooltip />
                   {labels.map((label: any, index: number) => (
-                    <Line
+                    <Scatter
                       key={index}
                       dataKey={label.key}
                       fill={label.color}
                       stroke={label.color}
-                      hide={lineProps[label.key] === true}
+                      hide={scatterProps[label.key] === true}
                       fillOpacity={Number(
-                        lineProps.hover === label.key || !lineProps.hover ? 1 : 0.6
+                        scatterProps.hover === label.key || !scatterProps.hover ? 1 : 0.6
                       )}
                     />
                   ))}
-              </LineChart>
+              </ScatterChart>
           </ResponsiveContainer>
       </>  
   );
@@ -116,26 +116,17 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
  */
 function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
   let combinedDataSet: any[] = [];
-  dataSets.forEach((dataSet) => {
-    // so for each dataset, want to check if x exists in
-    // combined dataset, if yes then append label for y
-    // if not, then create new object in array that has x
-    // and label y
-    dataSet.values.forEach((data) => {
-      let updatedData = {x: data[xName as keyof typeof data], [dataSet.label.key]: data[yName as keyof typeof data]}
-      // find index of x if it exists already in combined dataset
-      let i = combinedDataSet.findIndex(e => e.x === data[xName as keyof typeof data])
-      if (i > -1){
-        // it exists, now we need to append to it
-        let newData = {...combinedDataSet[i], ...updatedData}
-        combinedDataSet[i] = newData
-      }
-      else {
-        // doesn't exist, so we add it in
-        combinedDataSet.push(updatedData)
-      }
-    })
-  });
+  // extract the values we actually need into arrays
+  let xArray = dataSets[0].values.map(a => a[xName as keyof typeof a])
+  let yArray = dataSets[1].values.map(a => a[yName as keyof typeof a])
+  // create object with our new data
+  for (let i: number = 0; i < xArray.length; i++){
+    let dataObj = {
+        x: xArray[i],
+        [yName]: yArray[i]
+    }
+    combinedDataSet.push(dataObj)
+  }
   return combinedDataSet
 }
 

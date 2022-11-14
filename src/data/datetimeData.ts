@@ -48,10 +48,15 @@ function generateDateData(interval: number): any[] {
     console.log(date_ms)
     const dataArray = []
     for(let i: number = 0; i < 50; i++){
-        let dataObj: RatDataPoint = {date: "N/A", rats: 0}
+        let dataObj: RatDataPoint = {
+            date: "N/A", 
+            rats: 0,
+            plagueVictims: 0
+        }
         let _date = new Date(date_ms).toDateString()
         dataObj.date = _date
         dataObj.rats = Math.random() * 1000
+        dataObj.plagueVictims = Math.round(Math.random() * 100)
         dataArray.push(dataObj)
         date_ms += interval
     };
@@ -69,10 +74,15 @@ function generateDateData(interval: number): any[] {
     console.log(date_ms)
     const dataArray = []
     for(let i: number = 0; i < 50; i++){
-        let dataObj: RatDataPoint = {date: "N/A", rats: 0}
+        let dataObj: RatDataPoint = {
+            date: "N/A", 
+            rats: 0, 
+            plagueVictims: 0
+        }
         let _date = new Date(date_ms).toLocaleTimeString()
         dataObj.date = _date
         dataObj.rats = Math.random() * 1000
+        dataObj.plagueVictims = Math.round(Math.random() * 100)
         dataArray.push(dataObj)
         date_ms += interval
     };

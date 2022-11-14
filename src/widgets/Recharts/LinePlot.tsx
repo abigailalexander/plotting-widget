@@ -29,9 +29,7 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
   // want to change all "y" to "label"
   let allData = combineData(data, xName, yName)
   console.log(allData)
-  // want to compile all data into single array? with label name as y
-  // so ta
-  // what does this do?
+  // this sets up state for showing/hiding traces
   const [lineProps, setLineProps] = useState(
       labels.reduce(
         (a: any, { key }: any) => {
