@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {
     LineChart,
     Line,
@@ -14,6 +14,7 @@ import { LineComponentProps, DataSet } from "../types";
   
 export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
+    mode,
     width,
     height,
     data,
@@ -27,8 +28,32 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
   // want to extract all labels
   let labels = data.map(a => a.label)
   // want to change all "y" to "label"
-  let allData = combineData(data, xName, yName)
-  console.log(allData)
+  let combinedData = combineData(data, xName, yName)
+  let [allData, setAllData] = useState(combinedData)
+
+  // setInterval and react hooks don't work normally together,
+  // so this is a necessary workaround
+  useInterval(() => {    
+    // we want to cycle the data around but ONLY for y values
+    let newData = [...allData];
+    if (mode === "cycle"){
+      newData.push.apply(newData, newData.splice(0, 1));
+      for(let i: number = 0; i < newData.length; i++){
+        //reset numbers to correct order
+        newData[i].x = i
+      }   
+    }
+    else{
+      // add data instead of cycling
+      let newPoint = newData[newData.length -1]
+      newPoint.x += 1
+      labels.forEach((label, i) => newPoint[label.key as keyof typeof newPoint] += 20)
+      newData.push(newPoint)
+    }
+    
+    setAllData(newData);
+    }, 100);
+
   // this sets up state for showing/hiding traces
   const [lineProps, setLineProps] = useState(
       labels.reduce(
@@ -140,3 +165,22 @@ function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
   return combinedDataSet
 }
 
+function useInterval(callback: any, delay: number) {
+  const savedCallback: any = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current()
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}

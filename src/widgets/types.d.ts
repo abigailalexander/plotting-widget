@@ -22,6 +22,7 @@ export type DataSet = {
 
 // Component can accept multiple datasets
 type LineComponentProps = {
+    mode: string;
     width: number;
     height: number;
     data: DataSet[]; 
@@ -34,6 +35,7 @@ type LineComponentProps = {
 };
 
 type PlotlyLineComponentProps = {
+    mode: string; //determines if cycling or adding new data
     width: number;
     height: number;
     data: DataSet[]; 

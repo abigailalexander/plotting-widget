@@ -40,7 +40,7 @@ export const fifthData: DataSet = {
 function generateData(interval: number): any[] {
     let k: number = Math.random() * 10000
     const dataArray = []
-    for(let i: number = 0; i < 50; i++){
+    for(let i: number = 0; i < 500; i++){
         let dataObj = {x: 0, y: 0}
         dataObj.x = i
         dataObj.y = k
