@@ -45,14 +45,16 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
     }
     else{
       // add data instead of cycling
-      let newPoint = newData[newData.length -1]
+      // copy last point to create new one
+      let newPoint = {...newData.at(-1)}
+      // remove first element to keep at 500 points
+      newData.shift()
       newPoint.x += 1
       labels.forEach((label, i) => newPoint[label.key as keyof typeof newPoint] += 20)
       newData.push(newPoint)
     }
-    
     setAllData(newData);
-    }, 100);
+    }, 100); // rate of 0.1hz
 
   // this sets up state for showing/hiding traces
   const [lineProps, setLineProps] = useState(
@@ -95,11 +97,17 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
                   width={width} //was 600
                   height={height} // was 300
                   margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid />
-                  <XAxis dataKey={dataKey} dy={10} dx={20}>
+                  <CartesianGrid /> 
+                  <XAxis dataKey={dataKey} 
+                  type="number"
+                  dy={10} dx={20} //config below shows every 50 ticks, incrementing graph along
+                  ticks={setTickIntervals(allData)}
+                  tickCount={setTickIntervals(allData).length}
+                  domain={[allData.at(0).x, allData.at(-1).x]}>
+                    allowDataOverflow={true}
                     <Label value={xLabel}/>
                   </XAxis>
-                  <YAxis>type="number" domain={yLimit}
+                  <YAxis interval="preserveStartEnd">type="number" domain={yLimit}
                     <Label
                       value={yLabel}
                       position="left"
@@ -183,4 +191,44 @@ function useInterval(callback: any, delay: number) {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+// This was a failed attempt at enforcing certain tick
+// intervals and limits on recharts graph...
+
+/**
+ * Finds 
+ * @param nearestNum nearest number to round to
+ */
+function roundUpToNearest(nearestNum: number, value: number) {
+  return Math.ceil(value / nearestNum) * nearestNum;
+}
+
+/**
+ * Finds 
+ * @param nearestNum nearest number to round to
+ */
+ function roundDownToNearest(nearestNum: number, value: number) {
+  return Math.floor(value / nearestNum) * nearestNum;
+}
+
+/**
+ * Finds x axis lower and upper limits
+ * @param data trace data plotted
+ */
+function findXAxisLimit(data: any[]){
+  let lowest = data.at(0).x;
+  let highest = data.at(-1).x;
+  return [roundDownToNearest(50, lowest), roundUpToNearest(50, highest)];
+}
+
+// second attempt at setting proper tick intervals
+function setTickIntervals(data: any[]){
+  let limits: number[] = findXAxisLimit(data)
+  let tickIntervals: number[] = []
+  // want to find all 50 integer intervals between limits
+  for (let i: number = limits[0]+50; i <= limits[1]-50; i+=50){
+    tickIntervals.push(i)
+  }
+  return tickIntervals
 }

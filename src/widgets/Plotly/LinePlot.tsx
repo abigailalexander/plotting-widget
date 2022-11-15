@@ -35,12 +35,14 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
     else{
       // add data instead of cycling
       for (let i: number = 0; i < newData.length; i++){
-        newData[i].x.push(newData[i].x.length)
-        newData[i].y.push(newData[i].y[newData[i].y.length -1] + 20)
+        newData[i].x.push(newData[i].x.at(-1) + 1)
+        newData[i].y.push(newData[i].y.at(-1) + 20)
+        // ensure max 500 points plotted
+        newData[i].x = newData[i].x.slice(-500)
+        newData[i].y = newData[i].y.slice(-500)
       }
     }
     setAllData(newData);
-    console.log(allData)
     setRevision(revision + 1)
     }, 100);
 
