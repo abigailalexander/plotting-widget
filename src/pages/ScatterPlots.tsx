@@ -12,7 +12,7 @@ const ScatterPlots = () => {
       width= {600}
       height = {300}
       dataKey= "x"
-      xName="x"
+      xName="y"
       yName="plagueVictims"
       yLabel= "Number of plague victims"
       xLabel= "KWh"
