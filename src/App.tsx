@@ -1,117 +1,23 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import { LineChartComponent } from "./widgets/Recharts/LinePlot";
-import { PlotlyLineChartComponent } from './widgets/Plotly/LinePlot';
-import { PlotlyTimeSeriesChartComponent } from './widgets/Plotly/TimeSeriesPlot';
-import { TimeSeriesChartComponent } from './widgets/Recharts/TImeSeriesPlot';
-import { ScatterChartComponent } from './widgets/Recharts/ScatterPlot';
-import {firstData, secondData, thirdData, fourthData, fifthData} from "./data/basicData"
-import {dateOne, dateTwo, dateThree, dateFour, dateFive} from "./data/datetimeData"
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import LinePlots from "./pages/LinePlots";
+import TimeSeriesPlots from "./pages/TimeSeriesPlots";
+import ScatterPlots from "./pages/ScatterPlots";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <LineChartComponent 
-      mode="cycle"
-      data= {[firstData, secondData, thirdData, fourthData, fifthData]}
-      width= {600}
-      height = {300}
-      dataKey= "x"
-      xName="x"
-      yName="y"
-      yLabel= "KWh"
-      xLabel= "hours"
-      yLimit= {[0, 10000]}
-      />
-      <PlotlyLineChartComponent
-      mode="cycle"
-      data= {[firstData, secondData, thirdData, fourthData, fifthData]}
-      width= {1600}
-      height = {750}
-      xName="x"
-      yName="y"
-      yLabel= "KWh"
-      xLabel= "hours"
-      yLimit= {[0, 15000]}
-      />
-      <LineChartComponent 
-      mode="add"
-      data= {[firstData, secondData, thirdData, fourthData, fifthData]}
-      width= {600}
-      height = {300}
-      dataKey= "x"
-      xName="x"
-      yName="y"
-      yLabel= "KWh"
-      xLabel= "hours"
-      yLimit= {[0, 10000]}
-      />
-      <PlotlyLineChartComponent
-      mode="add"
-      data= {[firstData, secondData, thirdData, fourthData, fifthData]}
-      width= {1600}
-      height = {750}
-      xName="x"
-      yName="y"
-      yLabel= "KWh"
-      xLabel= "hours"
-      yLimit= {[0, 15000]}
-      />
-      <TimeSeriesChartComponent 
-      mode="cycle"
-      data= {[dateOne, dateTwo]}
-      width= {600}
-      height = {300}
-      dataKey= "x"
-      xName="date"
-      yName="rats"
-      yLabel= "Number of rats"
-      xLabel= "Date"
-      />
-      <TimeSeriesChartComponent 
-      mode="cycle"
-      data= {[dateThree, dateFour, dateFive]}
-      width= {600}
-      height = {300}
-      dataKey= "x"
-      xName="date"
-      yName="plagueVictims"
-      yLabel= "Number of plague victims"
-      xLabel= "Time"
-      />
-      <PlotlyTimeSeriesChartComponent
-      mode="cycle"
-      data= {[dateOne, dateTwo]}
-      width= {1600}
-      height = {750}
-      xName="date"
-      yName="rats"
-      yLabel= "Number of rats"
-      xLabel= "Date"
-      />
-      <PlotlyTimeSeriesChartComponent
-      mode="cycle"
-      data= {[dateThree, dateFour, dateFive]}
-      width= {1600}
-      height = {750}
-      xName="date"
-      yName="plagueVictims"
-      yLabel= "Number of plague victims"
-      xLabel= "Time"
-      />
-      <ScatterChartComponent 
-      mode="cycle"
-      data= {[firstData, dateFour]}
-      width= {600}
-      height = {300}
-      dataKey= "x"
-      xName="x"
-      yName="plagueVictims"
-      yLabel= "Number of plague victims"
-      xLabel= "KWh"
-      />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="Line" element={<LinePlots />} />
+          <Route path="TimeSeries" element={<TimeSeriesPlots />} />
+          <Route path="Scatter" element={<ScatterPlots />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
