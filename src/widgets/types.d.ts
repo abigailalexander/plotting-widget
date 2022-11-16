@@ -50,3 +50,17 @@ type PlotlyLineComponentProps = {
     yLabel: string; // name for y axis
     yInterval: number; //unit to round y interval to
 }
+
+type ChartjsLineComponentProps = {
+    mode: string; //determines if cycling or adding new data
+    dataAmount: number; //amount of data points to display
+    symbol?: string; //symbol to display (if any)
+    width: number;
+    height: number;
+    data: DataSet[]; 
+    xName: string;
+    yName: string;
+    xLabel: string; //name for x axis
+    yLabel: string; // name for y axis
+    yInterval: number; //unit to round y interval to
+}
