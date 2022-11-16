@@ -11,9 +11,12 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { LineComponentProps, DataSet } from "../types";
+import { setTickIntervals } from "../../utils";
   
 export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
+    dataAmount,
+    intervalSize,
     mode,
     width,
     height,
@@ -101,8 +104,8 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
                   <XAxis dataKey={dataKey} 
                   type="number"
                   dy={10} dx={20} //config below shows every 50 ticks, incrementing graph along
-                  ticks={setTickIntervals(allData)}
-                  tickCount={setTickIntervals(allData).length}
+                  ticks={setTickIntervals(allData, intervalSize)}
+                  tickCount={setTickIntervals(allData, intervalSize).length}
                   domain={[allData.at(0).x, allData.at(-1).x]}>
                     allowDataOverflow={true}
                     <Label value={xLabel}/>
@@ -191,44 +194,4 @@ function useInterval(callback: any, delay: number) {
       return () => clearInterval(id);
     }
   }, [delay]);
-}
-
-// This was a failed attempt at enforcing certain tick
-// intervals and limits on recharts graph...
-
-/**
- * Finds 
- * @param nearestNum nearest number to round to
- */
-function roundUpToNearest(nearestNum: number, value: number) {
-  return Math.ceil(value / nearestNum) * nearestNum;
-}
-
-/**
- * Finds 
- * @param nearestNum nearest number to round to
- */
- function roundDownToNearest(nearestNum: number, value: number) {
-  return Math.floor(value / nearestNum) * nearestNum;
-}
-
-/**
- * Finds x axis lower and upper limits
- * @param data trace data plotted
- */
-function findXAxisLimit(data: any[]){
-  let lowest = data.at(0).x;
-  let highest = data.at(-1).x;
-  return [roundDownToNearest(50, lowest), roundUpToNearest(50, highest)];
-}
-
-// second attempt at setting proper tick intervals
-function setTickIntervals(data: any[]){
-  let limits: number[] = findXAxisLimit(data)
-  let tickIntervals: number[] = []
-  // want to find all 50 integer intervals between limits
-  for (let i: number = limits[0]+50; i <= limits[1]-50; i+=50){
-    tickIntervals.push(i)
-  }
-  return tickIntervals
 }

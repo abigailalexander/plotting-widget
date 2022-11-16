@@ -8,6 +8,8 @@ const LinePlots = () => {
     <>
       <LineChartComponent 
       mode="cycle"
+      dataAmount={500} 
+      intervalSize={50}
       data= {[firstData, secondData, thirdData, fourthData, fifthData]}
       width= {600}
       height = {300}
@@ -20,6 +22,9 @@ const LinePlots = () => {
       />
       <PlotlyLineChartComponent
       mode="cycle"
+      dataAmount={500}
+      symbol="circle"
+      type="lines"
       data= {[firstData, secondData, thirdData, fourthData, fifthData]}
       width= {1600}
       height = {750}
@@ -27,10 +32,12 @@ const LinePlots = () => {
       yName="y"
       yLabel= "KWh"
       xLabel= "hours"
-      yLimit= {[0, 15000]}
+      yInterval= {100}
       />
       <LineChartComponent 
       mode="add"
+      dataAmount={500} 
+      intervalSize={50}
       data= {[firstData, secondData, thirdData, fourthData, fifthData]}
       width= {600}
       height = {300}
@@ -43,6 +50,9 @@ const LinePlots = () => {
       />
       <PlotlyLineChartComponent
       mode="add"
+      dataAmount={500}
+      symbol="circle"
+      type="lines"
       data= {[firstData, secondData, thirdData, fourthData, fifthData]}
       width= {1600}
       height = {750}
@@ -50,7 +60,7 @@ const LinePlots = () => {
       yName="y"
       yLabel= "KWh"
       xLabel= "hours"
-      yLimit= {[0, 15000]}
+      yInterval={100}
       />
     </>
   );

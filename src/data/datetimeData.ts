@@ -45,9 +45,8 @@ export const dateFive: DataSet = {
  */
 function generateDateData(interval: number): any[] {
     let date_ms: number = Date.now()
-    console.log(date_ms)
     const dataArray = []
-    for(let i: number = 0; i < 50; i++){
+    for(let i: number = 0; i < 500; i++){
         let dataObj: RatDataPoint = {
             date: "N/A", 
             rats: 0,
@@ -71,9 +70,8 @@ function generateDateData(interval: number): any[] {
  */
  function generateTimeData(interval: number): any[] {
     let date_ms: number = Date.now()
-    console.log(date_ms)
     const dataArray = []
-    for(let i: number = 0; i < 50; i++){
+    for(let i: number = 0; i < 500; i++){
         let dataObj: RatDataPoint = {
             date: "N/A", 
             rats: 0, 

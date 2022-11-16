@@ -8,6 +8,8 @@ const TimeSeriesPlots = () => {
     <>
       <TimeSeriesChartComponent 
       mode="cycle"
+      dataAmount={500} 
+      intervalSize={50}
       data= {[dateOne, dateTwo]}
       width= {600}
       height = {300}
@@ -19,6 +21,8 @@ const TimeSeriesPlots = () => {
       />
       <TimeSeriesChartComponent 
       mode="cycle"
+      dataAmount={500} 
+      intervalSize={50}
       data= {[dateThree, dateFour, dateFive]}
       width= {600}
       height = {300}
@@ -30,6 +34,9 @@ const TimeSeriesPlots = () => {
       />
       <PlotlyTimeSeriesChartComponent
       mode="cycle"
+      dataAmount={500}
+      symbol="diamond"
+      type="lines+markers"
       data= {[dateOne, dateTwo]}
       width= {1600}
       height = {750}
@@ -37,8 +44,12 @@ const TimeSeriesPlots = () => {
       yName="rats"
       yLabel= "Number of rats"
       xLabel= "Date"
+      yInterval={100}
       />
       <PlotlyTimeSeriesChartComponent
+      dataAmount={500}
+      symbol="diamond"
+      type="lines+markers"
       mode="cycle"
       data= {[dateThree, dateFour, dateFive]}
       width= {1600}
@@ -47,6 +58,7 @@ const TimeSeriesPlots = () => {
       yName="plagueVictims"
       yLabel= "Number of plague victims"
       xLabel= "Time"
+      yInterval={100}
       />
     </>
   );

@@ -23,6 +23,8 @@ export type DataSet = {
 // Component can accept multiple datasets
 type LineComponentProps = {
     mode: string;
+    dataAmount: number; //amount of data points to display
+    intervalSize: number; //tick interval size
     width: number;
     height: number;
     data: DataSet[]; 
@@ -36,6 +38,9 @@ type LineComponentProps = {
 
 type PlotlyLineComponentProps = {
     mode: string; //determines if cycling or adding new data
+    dataAmount: number; //amount of data points to display
+    symbol?: string; //symbol to display (if any)
+    type: string; //type of plot
     width: number;
     height: number;
     data: DataSet[]; 
@@ -43,5 +48,5 @@ type PlotlyLineComponentProps = {
     yName: string;
     xLabel: string; //name for x axis
     yLabel: string; // name for y axis
-    yLimit?: number[]; //limits of axis
+    yInterval: number; //unit to round y interval to
 }

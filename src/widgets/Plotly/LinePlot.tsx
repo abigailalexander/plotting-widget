@@ -2,10 +2,14 @@ import React, {useEffect, useState, useRef} from "react";
 import Plot from 'react-plotly.js';
 import { PlotlyLineComponentProps } from "../types";
 import { DataSet } from "../types";
+import { findYAxisLimit } from "../../utils";
 
 export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.Element => {
   const { //get props
     mode,
+    dataAmount,
+    symbol,
+    type,
     width,
     height,
     data,
@@ -13,10 +17,10 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
     yName,
     xLabel,
     yLabel,
-    yLimit
+    yInterval
   } = props;
 
-  let firstData = createLines(data, xName, yName)
+  let firstData = createLines(data, xName, yName, type, symbol)
   let [allData, setAllData] = useState(firstData)
   let [revision, setRevision] = useState(0)
 
@@ -38,8 +42,8 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
         newData[i].x.push(newData[i].x.at(-1) + 1)
         newData[i].y.push(newData[i].y.at(-1) + 20)
         // ensure max 500 points plotted
-        newData[i].x = newData[i].x.slice(-500)
-        newData[i].y = newData[i].y.slice(-500)
+        newData[i].x = newData[i].x.slice(-dataAmount)
+        newData[i].y = newData[i].y.slice(-dataAmount)
       }
     }
     setAllData(newData);
@@ -59,7 +63,7 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
           },
           yaxis: {
               title: yLabel,
-              range: yLimit
+              range: findYAxisLimit(allData, yInterval)
           },
         datarevision: revision}
         }
@@ -68,7 +72,7 @@ export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.E
     );
 }
 
-function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
+function createLines(dataSets: DataSet[], xName: string, yName: string, type: string, symbol?: string): any[] {
     let traces: any[] = [];
     dataSets.map(dataSet => (
         traces.push({
@@ -76,10 +80,10 @@ function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
             x: dataSet.values.map(point => point[xName as keyof typeof point]), 
             y: dataSet.values.map(point => point[yName as keyof typeof point]),
             type: 'scatter',
-            mode: 'lines',
+            mode: type,
             marker: {
               color: dataSet.label.color, 
-              symbol: "circle" 
+              symbol: symbol 
             },
         })
     ))

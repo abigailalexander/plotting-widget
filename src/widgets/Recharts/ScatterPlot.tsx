@@ -11,9 +11,12 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { LineComponentProps, DataSet } from "../types";
+import { setTickIntervals } from "../../utils";
   
 export const ScatterChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
+    dataAmount,
+    intervalSize,
     width,
     height,
     data,
@@ -73,8 +76,8 @@ export const ScatterChartComponent = (props: LineComponentProps): JSX.Element =>
                   margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid />
                   <XAxis dataKey={dataKey} interval={'preserveStartEnd'} type="number"
-                  ticks={setTickIntervals(allData)}
-                  tickCount={setTickIntervals(allData).length}
+                  ticks={setTickIntervals(allData, intervalSize)}
+                  tickCount={setTickIntervals(allData, intervalSize).length}
                   domain={[allData.at(0).x, allData.at(-1).x]}>
                     <Label value={xLabel}/>
                   </XAxis>
@@ -131,41 +134,4 @@ function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
     combinedDataSet.push(dataObj)
   }
   return combinedDataSet
-}
-
-/**
- * Finds 
- * @param nearestNum nearest number to round to
- */
- function roundUpToNearest(nearestNum: number, value: number) {
-  return Math.ceil(value / nearestNum) * nearestNum;
-}
-
-/**
- * Finds 
- * @param nearestNum nearest number to round to
- */
- function roundDownToNearest(nearestNum: number, value: number) {
-  return Math.floor(value / nearestNum) * nearestNum;
-}
-
-/**
- * Finds x axis lower and upper limits
- * @param data trace data plotted
- */
-function findXAxisLimit(data: any[]){
-  let lowest = data.at(0).x;
-  let highest = data.at(-1).x;
-  return [roundDownToNearest(200, lowest), roundUpToNearest(200, highest)];
-}
-
-// second attempt at setting proper tick intervals
-function setTickIntervals(data: any[]){
-  let limits: number[] = findXAxisLimit(data)
-  let tickIntervals: number[] = []
-  // want to find all 50 integer intervals between limits
-  for (let i: number = limits[0]+200; i <= limits[1]-200; i+=200){
-    tickIntervals.push(i)
-  }
-  return tickIntervals
 }

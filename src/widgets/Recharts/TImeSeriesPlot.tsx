@@ -11,9 +11,12 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { LineComponentProps, DataSet } from "../types";
+import { setTickIntervals } from "../../utils";
   
 export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
+    dataAmount,
+    intervalSize,
     width,
     height,
     data,
@@ -27,7 +30,7 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
   let labels = data.map(a => a.label)
   // want to change all "y" to "label"
   let allData = combineData(data, xName, yName)
-  console.log(allData)
+  //console.log(allData)
   // this sets up state for showing/hiding traces
   const [lineProps, setLineProps] = useState(
       labels.reduce(
@@ -70,7 +73,9 @@ export const TimeSeriesChartComponent = (props: LineComponentProps): JSX.Element
                   height={height} // was 300
                   margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid />
-                  <XAxis dataKey={dataKey} dy={10} dx={20}>
+                  <XAxis dataKey={dataKey} dy={10} dx={20}
+                  ticks={setTickIntervals(allData, intervalSize)}
+                  tickCount={setTickIntervals(allData, intervalSize).length}>
                     <Label value={xLabel}/>
                   </XAxis>
                   <YAxis>type="number"

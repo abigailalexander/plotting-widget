@@ -5,6 +5,9 @@ import { DataSet } from "../types";
 
 export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps): JSX.Element => {
     const { //get props
+      dataAmount,
+      symbol,
+      type,
       width,
       height,
       data,
@@ -13,12 +16,12 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
       xLabel,
       yLabel,
     } = props;
-    console.log(data)
+    //console.log(data)
     // here we return the actual chart
     // plotly is able to parse datetimes from strings
     return (
         <Plot
-          data={createLines(data, xName, yName)}
+          data={createLines(data, xName, yName, type, symbol)}
           layout={
             {width: width, 
             height: height, 
@@ -34,7 +37,7 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
       );
   }
 
-function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
+function createLines(dataSets: DataSet[], xName: string, yName: string, type: string, symbol?: string): any[] {
     let traces: any[] = [];
     dataSets.map(dataSet => (
         traces.push({
@@ -42,10 +45,10 @@ function createLines(dataSets: DataSet[], xName: string, yName: string): any[] {
             x: dataSet.values.map(point => point[xName as keyof typeof point]), 
             y: dataSet.values.map(point => point[yName as keyof typeof point]),
             type: 'scatter',
-            mode: 'lines+markers',
+            mode: type,
             marker: {
               color: dataSet.label.color, 
-              symbol: "diamond" 
+              symbol: symbol 
             },
         })
     ))

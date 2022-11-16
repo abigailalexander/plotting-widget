@@ -6,7 +6,9 @@ import {dateOne, dateTwo, dateThree, dateFour, dateFive} from "../data/datetimeD
 const ScatterPlots = () => {
   return (
     <>
-      <ScatterChartComponent 
+      <ScatterChartComponent
+      dataAmount={500} 
+      intervalSize={200}
       mode="cycle"
       data= {[firstData, dateFour]}
       width= {600}
