@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState} from "react";
 import {
     LineChart,
     Line,
@@ -11,7 +11,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { LineComponentProps, DataSet } from "../types";
-import { setTickIntervals } from "../../utils";
+import { setTickIntervals, useInterval } from "../../utils";
   
 export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
   const { //get props
@@ -174,24 +174,4 @@ function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
     })
   });
   return combinedDataSet
-}
-
-function useInterval(callback: any, delay: number) {
-  const savedCallback: any = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current()
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
 }

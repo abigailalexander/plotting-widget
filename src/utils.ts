@@ -1,3 +1,4 @@
+import {useEffect, useRef} from "react"
 /**
  * rounds value down to nearest value given
  * @param nearestNum nearest number to round to
@@ -50,3 +51,23 @@ export function findYAxisLimit(data: any[], interval: number){
     const max = Math.max.apply(null, allTraceData)
     return [0, roundUpToNearest(max, interval)]
 }
+
+export function useInterval(callback: any, delay: number) {
+    const savedCallback: any = useRef();
+  
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+  
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current()
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }

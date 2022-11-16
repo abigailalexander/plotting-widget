@@ -1,8 +1,8 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useState} from "react";
 import Plot from 'react-plotly.js';
 import { PlotlyLineComponentProps } from "../types";
 import { DataSet } from "../types";
-import { findYAxisLimit } from "../../utils";
+import { findYAxisLimit, useInterval } from "../../utils";
 
 export const PlotlyLineChartComponent = (props: PlotlyLineComponentProps): JSX.Element => {
   const { //get props
@@ -88,25 +88,4 @@ function createLines(dataSets: DataSet[], xName: string, yName: string, type: st
         })
     ))
     return traces
-}
-
-
-function useInterval(callback: any, delay: number) {
-  const savedCallback: any = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current()
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
 }
