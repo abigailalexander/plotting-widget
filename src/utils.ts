@@ -52,6 +52,16 @@ export function findYAxisLimit(data: any[], interval: number){
     return [0, roundUpToNearest(max, interval)]
 }
 
+export function findYAxisLimitChartjs(data: any[], interval: number){
+    let allTraceData: number[] = []
+    data.map(trace => (
+        allTraceData.push(trace)
+    ))
+    const min = Math.min.apply(null, allTraceData)
+    const max = Math.max.apply(null, allTraceData)
+    return [0, roundUpToNearest(max, interval)]
+}
+
 export function useInterval(callback: any, delay: number) {
     const savedCallback: any = useRef();
   
