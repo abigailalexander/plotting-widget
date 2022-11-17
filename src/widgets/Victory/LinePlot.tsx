@@ -46,34 +46,21 @@ export const VictoryLineChartComponent = (props: VictoryLineComponentProps): JSX
       })
     }
     else{
+        // this doesn't seem to work properly???
+        // should move data along by x+1 but lower
+        // numbers don't move?
         for (let i=0; i < newData.length; i++){
             let newPoint = {...newData[i].at(-1)}
-            //console.log(newData[i].at(0))
-            newData[i] = newData[i].shift()
             newPoint.x += 1
             newPoint.y += 20
             newData[i].push(newPoint)
+            // ensure max 500 points plotted
+            newData[i] = newData[i].slice(-dataAmount)
         }
-        /*
-      // add data instead of cycling
-      for (let i=0; i < newData.length; i++){
-        // line is array of {x, y, l} objects
-        let newPoint = {
-            x: newData[i].at(-1).x + 1, 
-            y: newData[i].at(-1).y + 20,
-            l: labels[i].key
-        }
-        //console.log(newData[i].at(0))
-        newData[i].push(newPoint)
-        // ensure max 500 points plotted
-        //newData[i] = newData[i].slice(-dataAmount)
-        //console.log(newData[i].length)
-        
-      }*/
+      console.log(newData)
     }
     setAllData(newData);
-
-    }, 10000);
+    }, 100);
 
   let yAxisLimits = findYAxisLimitVictory(allData, yInterval)
   let xAxisLimits = findXAxisLimitVictory(allData, 50)
