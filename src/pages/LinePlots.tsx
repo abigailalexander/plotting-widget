@@ -2,6 +2,7 @@ import React from "react";
 import { LineChartComponent } from "../widgets/Recharts/LinePlot";
 import { PlotlyLineChartComponent } from '../widgets/Plotly/LinePlot';
 import { ChartjsLineChartComponent } from "../widgets/React-chartjs-2/LinePlot";
+import { VictoryLineChartComponent } from "../widgets/Victory/LinePlot";
 import {firstData, secondData, thirdData, fourthData, fifthData} from "../data/basicData"
 
 const LinePlots = () => {
@@ -48,6 +49,18 @@ const LinePlots = () => {
       xLabel= "hours"
       yInterval={100}
       />
+      <VictoryLineChartComponent
+      mode="cycle"
+      dataAmount={500}
+      symbol="circle"
+      data= {[firstData, secondData, thirdData, fourthData, fifthData]}
+      width= {1600}
+      height = {750}
+      xName="x"
+      yName="y"
+      yLabel= "KWh"
+      xLabel= "hours"
+      yInterval={100}/>
       <LineChartComponent 
       mode="add"
       dataAmount={500} 
@@ -76,7 +89,7 @@ const LinePlots = () => {
       xLabel= "hours"
       yInterval={100}
       />
-      <ChartjsLineChartComponent
+      <VictoryLineChartComponent
       mode="add"
       dataAmount={500}
       symbol="circle"
@@ -87,8 +100,7 @@ const LinePlots = () => {
       yName="y"
       yLabel= "KWh"
       xLabel= "hours"
-      yInterval={100}
-      />
+      yInterval={100}/>
     </>
   );
 };
