@@ -127,6 +127,7 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
                   <Tooltip />
                   {labels.map((label: any, index: number) => (
                     <Line
+                      dot={false} //doesnt render dots - useful if refresh rate low
                       key={index}
                       dataKey={label.key}
                       fill={label.color}
