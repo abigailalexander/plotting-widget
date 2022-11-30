@@ -121,10 +121,11 @@ export const ScatterChartComponent = (props: LineComponentProps): JSX.Element =>
  * @param dataSets array of datasets 
  */
 function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
+  let _dataSets = [...dataSets]
   let combinedDataSet: any[] = [];
   // extract the values we actually need into arrays
-  let xArray = dataSets[0].values.map(a => a[xName as keyof typeof a])
-  let yArray = dataSets[1].values.map(a => a[yName as keyof typeof a])
+  let xArray = _dataSets[0].values.map(a => a[xName as keyof typeof a])
+  let yArray = _dataSets[1].values.map(a => a[yName as keyof typeof a])
   // create object with our new data
   for (let i: number = 0; i < xArray.length; i++){
     let dataObj = {

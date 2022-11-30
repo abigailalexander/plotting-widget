@@ -24,7 +24,7 @@ export const VictoryLineChartComponent = (props: VictoryLineComponentProps): JSX
     yLabel,
     yInterval
   } = props;
-  //console.log(data)
+
   let labels = data.map(a => a.label)
   let firstData = createLines(data, labels)
   let [allData, setAllData] = useState(firstData)
@@ -57,7 +57,6 @@ export const VictoryLineChartComponent = (props: VictoryLineComponentProps): JSX
             // ensure max 500 points plotted
             newData[i] = newData[i].slice(-dataAmount)
         }
-      console.log(newData)
     }
     setAllData(newData);
     }, 100);
@@ -139,13 +138,14 @@ export const VictoryLineChartComponent = (props: VictoryLineComponentProps): JSX
 }
 
 function createLines(dataSets: DataSet[], labels: any[]): any[] {
+  let _dataSets = [...dataSets]
     let lines: any[] = [];
-    for (let i=0; i < dataSets.length; i++){
-        let data: any[] = [...dataSets[i].values]
+    for (let i=0; i < _dataSets.length; i++){
+        let newData: any[] = [..._dataSets[i].values]
         // add label for zoronoi container tooltip
-        let labelledData = data.map((data) => {
-            data.l = labels[i].key
-            return data
+        let labelledData = newData.map((newData) => {
+            //data.l = labels[i].key
+            return newData
         })
         lines.push(labelledData)
     }

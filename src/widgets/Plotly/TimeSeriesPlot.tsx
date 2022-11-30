@@ -38,8 +38,9 @@ export const PlotlyTimeSeriesChartComponent = (props: PlotlyLineComponentProps):
   }
 
 function createLines(dataSets: DataSet[], xName: string, yName: string, type: string, symbol?: string): any[] {
+  let _dataSets = [...dataSets]
     let traces: any[] = [];
-    dataSets.map(dataSet => (
+    _dataSets.map(dataSet => (
         traces.push({
             name: dataSet.label.key,
             x: dataSet.values.map(point => point[xName as keyof typeof point]), 

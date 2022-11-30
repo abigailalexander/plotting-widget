@@ -114,10 +114,11 @@ export const ChartjsLineChartComponent = (props: ChartjsLineComponentProps): JSX
 
 // split y data into .datasets[] and x data into .labels...
 function createDataset(dataSets: DataSet[], xName: string, yName: string, symbol?: string): ChartData<"line"> {
+    let _dataSets = [...dataSets]
     // create correct data format for react-chartjs-2
     let newDataSets: ChartData<"line"> = {datasets: []}
-    newDataSets.labels = dataSets[0].values.map(point => point[xName as keyof typeof point])
-    dataSets.map(dataSet => (
+    newDataSets.labels = _dataSets[0].values.map(point => point[xName as keyof typeof point])
+    _dataSets.map(dataSet => (
         newDataSets.datasets.push({
             label: dataSet.label.key,
             data: dataSet.values.map(point => point[yName as keyof typeof point]), 

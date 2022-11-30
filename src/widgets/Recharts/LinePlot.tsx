@@ -153,8 +153,9 @@ export const LineChartComponent = (props: LineComponentProps): JSX.Element => {
  * @param dataSets array of datasets 
  */
 function combineData(dataSets: DataSet[], xName: string, yName: string): any[] {
+  let _dataSets = [...dataSets]
   let combinedDataSet: any[] = [];
-  dataSets.forEach((dataSet) => {
+  _dataSets.forEach((dataSet) => {
     // so for each dataset, want to check if x exists in
     // combined dataset, if yes then append label for y
     // if not, then create new object in array that has x
