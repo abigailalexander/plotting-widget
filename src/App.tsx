@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import LinePlots from "./pages/LinePlots";
 import TimeSeriesPlots from "./pages/TimeSeriesPlots";
 import ScatterPlots from "./pages/ScatterPlots";
+import Video from "./pages/Video";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="Line" element={<LinePlots />} />
           <Route path="TimeSeries" element={<TimeSeriesPlots />} />
           <Route path="Scatter" element={<ScatterPlots />} />
+          <Route path="Video" element={<Video />} />
         </Route>
       </Routes>
     </BrowserRouter>

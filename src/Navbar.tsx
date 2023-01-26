@@ -17,6 +17,9 @@ function Navbar() {
         <li>
           <Link to="/scatter">Scatter Plots</Link>
         </li>
+        <li>
+          <Link to="/video">Video</Link>
+        </li>
       </ul>
     </nav>
   );
